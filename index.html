@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwai Pixel Activator Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4A44C6;
+            --accent: #FF6584;
+            --dark: #2A2D3E;
+            --light: #F7F9FC;
+            --success: #2ECC71;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --gray: #95A5A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(42, 45, 62, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateX(5deg);
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #6C63FF, #FF6584);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(42, 45, 62, 0.8);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px) rotateX(2deg);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .card-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(30, 33, 50, 0.8);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.6);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #C0392B);
+            color: white;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .progress-container {
+            margin-top: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(30, 33, 50, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(30, 33, 50, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: perspective(500px) rotateY(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: perspective(500px) rotateY(0deg);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .log-container {
+            margin-top: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+            background: rgba(30, 33, 50, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .log-entry {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .log-success {
+            color: var(--success);
+        }
+
+        .log-error {
+            color: var(--danger);
+        }
+
+        .log-info {
+            color: var(--primary);
+        }
+
+        .log-warning {
+            color: var(--warning);
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="floating">
+            <h1><i class="fas fa-bolt"></i> Kwai Pixel Activator Pro</h1>
+            <p class="subtitle">Aktifkan pixel Kwai secara otomatis dengan kecepatan tinggi</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-cogs"></i> Konfigurasi Pixel
+                </div>
+                <div class="form-group">
+                    <label for="pixelIds">Pixel IDs (satu per baris):</label>
+                    <textarea id="pixelIds" placeholder="Contoh:
+296204918665311
+296204918665313
+296204918665311
+296204918665312"></textarea>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="form-group">
+                        <label for="numActivations">Jumlah Aktivasi:</label>
+                        <input type="number" id="numActivations" min="1" max="1000" value="50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="delay">Delay Antara Aktivasi (ms):</label>
+                        <input type="number" id="delay" min="0" max="5000" value="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="concurrent">Aktivasi Bersamaan:</label>
+                        <select id="concurrent">
+                            <option value="1">1 (Normal)</option>
+                            <option value="3">3 (Cepat)</option>
+                            <option value="5">5 (Sangat Cepat)</option>
+                            <option value="10">10 (Ekstrem)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Mulai Aktivasi
+                    </button>
+                    <button id="stopBtn" class="btn btn-danger" disabled>
+                        <i class="fas fa-stop"></i> Hentikan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-line"></i> Progress & Statistik
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>Progress Aktivasi</span>
+                        <span id="progressText">0% (0/0)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Pixel</div>
+                        <div class="stat-value" id="totalPixels">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Aktivasi Berhasil</div>
+                        <div class="stat-value" id="successCount">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Aktivasi Gagal</div>
+                        <div class="stat-value" id="errorCount">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Waktu Tersisa</div>
+                        <div class="stat-value" id="timeRemaining">0s</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-list-alt"></i> Log Aktivitas
+                </div>
+                <div class="log-container" id="logContainer">
+                    <div class="log-entry log-info">
+                        <div class="log-icon"><i class="fas fa-info-circle"></i></div>
+                        <div>Sistem siap. Masukkan Pixel IDs dan klik Mulai Aktivasi.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Kwai Pixel Activator Pro &copy; 2023 - Untuk penggunaan yang bertanggung jawab</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pixelIdsTextarea = document.getElementById('pixelIds');
+            const numActivationsInput = document.getElementById('numActivations');
+            const delayInput = document.getElementById('delay');
+            const concurrentSelect = document.getElementById('concurrent');
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const progressElement = document.getElementById('progress');
+            const progressTextElement = document.getElementById('progressText');
+            const logContainer = document.getElementById('logContainer');
+            const totalPixelsElement = document.getElementById('totalPixels');
+            const successCountElement = document.getElementById('successCount');
+            const errorCountElement = document.getElementById('errorCount');
+            const timeRemainingElement = document.getElementById('timeRemaining');
+            
+            let isRunning = false;
+            let currentProcess = null;
+            let successCount = 0;
+            let errorCount = 0;
+            let startTime = null;
+            
+            // Fungsi untuk menambahkan log
+            function addLog(message, type = 'info') {
+                const icons = {
+                    'info': 'info-circle',
+                    'success': 'check-circle',
+                    'error': 'exclamation-circle',
+                    'warning': 'exclamation-triangle'
+                };
+                
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry log-${type}`;
+                logEntry.innerHTML = `
+                    <div class="log-icon"><i class="fas fa-${icons[type]}"></i></div>
+                    <div>${message}</div>
+                `;
+                logContainer.appendChild(logEntry);
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+            
+            // Fungsi untuk mengupdate progress
+            function updateProgress(current, total) {
+                const percentage = Math.round((current / total) * 100);
+                progressElement.style.width = `${percentage}%`;
+                progressTextElement.textContent = `${percentage}% (${current}/${total})`;
+                
+                // Update waktu tersisa
+                if (startTime && current > 0) {
+                    const elapsed = Date.now() - startTime;
+                    const remaining = Math.max(0, Math.round((elapsed / current) * (total - current) / 1000));
+                    timeRemainingElement.textContent = `${remaining}s`;
+                }
+            }
+            
+            // Fungsi untuk mengaktifkan pixel (simulasi API Kwai)
+            function activatePixel(pixelId, activationNumber) {
+                return new Promise((resolve, reject) => {
+                    // Simulasi panggilan API ke Kwai
+                    setTimeout(() => {
+                        // Simulasi keberhasilan 95%
+                        const isSuccess = Math.random() > 0.05;
+                        
+                        if (isSuccess) {
+                            // Simulasi event register
+                            const registerData = {
+                                pixel_id: pixelId,
+                                event: 'register',
+                                timestamp: new Date().toISOString(),
+                                user_agent: navigator.userAgent
+                            };
+                            
+                            // Simulasi event purchase dengan nominal R$20
+                            const purchaseData = {
+                                pixel_id: pixelId,
+                                event: 'purchase',
+                                value: 20.00,
+                                currency: 'BRL',
+                                timestamp: new Date().toISOString()
+                            };
+                            
+                            // Dalam implementasi nyata, data ini akan dikirim ke API Kwai
+                            console.log(`Register event untuk Pixel ${pixelId}:`, registerData);
+                            console.log(`Purchase event untuk Pixel ${pixelId}:`, purchaseData);
+                            
+                            resolve({
+                                pixelId,
+                                activationNumber,
+                                registerData,
+                                purchaseData
+                            });
+                        } else {
+                            reject(new Error(`Gagal mengaktifkan pixel ${pixelId}`));
+                        }
+                    }, 50); // Waktu simulasi API call yang sangat cepat
+                });
+            }
+            
+            // Fungsi untuk memulai proses aktivasi
+            function startActivation() {
+                if (isRunning) return;
+                
+                const pixelIdsText = pixelIdsTextarea.value.trim();
+                if (!pixelIdsText) {
+                    addLog('Error: Masukkan minimal satu Pixel ID', 'error');
+                    return;
+                }
+                
+                const pixelIds = pixelIdsText.split('\n').filter(id => id.trim() !== '');
+                if (pixelIds.length === 0) {
+                    addLog('Error: Tidak ada Pixel ID yang valid', 'error');
+                    return;
+                }
+                
+                const numActivations = parseInt(numActivationsInput.value) || 1;
+                const delay = parseInt(delayInput.value) || 100;
+                const concurrent = parseInt(concurrentSelect.value) || 1;
+                
+                isRunning = true;
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                successCount = 0;
+                errorCount = 0;
+                startTime = Date.now();
+                
+                const totalPixels = pixelIds.length;
+                const totalActivations = totalPixels * numActivations;
+                
+                totalPixelsElement.textContent = totalPixels;
+                successCountElement.textContent = '0';
+                errorCountElement.textContent = '0';
+                timeRemainingElement.textContent = '0s';
+                
+                updateProgress(0, totalActivations);
+                addLog(`Memulai aktivasi ${totalActivations} pixel (${totalPixels} pixel × ${numActivations} aktivasi)`, 'info');
+                
+                // Proses aktivasi dengan concurrency
+                currentProcess = (async function() {
+                    let completedActivations = 0;
+                    
+                    for (let activation = 1; activation <= numActivations; activation++) {
+                        if (!isRunning) break;
+                        
+                        // Proses pixel dalam batch berdasarkan concurrency
+                        for (let i = 0; i < pixelIds.length; i += concurrent) {
+                            if (!isRunning) break;
+                            
+                            const batch = pixelIds.slice(i, i + concurrent);
+                            const batchPromises = batch.map(pixelId => 
+                                activatePixel(pixelId, activation)
+                                    .then(result => {
+                                        successCount++;
+                                        successCountElement.textContent = successCount;
+                                        addLog(`Pixel ${pixelId}: Register & Purchase berhasil (Aktivasi ${activation})`, 'success');
+                                        return result;
+                                    })
+                                    .catch(error => {
+                                        errorCount++;
+                                        errorCountElement.textContent = errorCount;
+                                        addLog(`Pixel ${pixelId}: Gagal - ${error.message}`, 'error');
+                                        return null;
+                                    })
+                                    .finally(() => {
+                                        completedActivations++;
+                                        updateProgress(completedActivations, totalActivations);
+                                    })
+                            );
+                            
+                            // Tunggu batch saat ini selesai
+                            await Promise.all(batchPromises);
+                            
+                            // Delay antar batch
+                            if (isRunning && delay > 0 && (i + concurrent < pixelIds.length || activation < numActivations)) {
+                                await new Promise(resolve => setTimeout(resolve, delay));
+                            }
+                        }
+                    }
+                    
+                    if (isRunning) {
+                        addLog(`Semua aktivasi selesai! Berhasil: ${successCount}, Gagal: ${errorCount}`, 'success');
+                        startBtn.disabled = false;
+                        stopBtn.disabled = true;
+                        isRunning = false;
+                    }
+                })();
+            }
+            
+            // Fungsi untuk menghentikan proses
+            function stopActivation() {
+                if (!isRunning) return;
+                
+                isRunning = false;
+                addLog('Proses aktivasi dihentikan oleh pengguna', 'warning');
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+            }
+            
+            // Event listeners
+            startBtn.addEventListener('click', startActivation);
+            stopBtn.addEventListener('click', stopActivation);
+            
+            // Validasi input
+            numActivationsInput.addEventListener('change', function() {
+                if (this.value < 1) this.value = 1;
+                if (this.value > 1000) this.value = 1000;
+            });
+            
+            delayInput.addEventListener('change', function() {
+                if (this.value < 0) this.value = 0;
+                if (this.value > 5000) this.value = 5000;
+            });
+            
+            // Update statistik saat input pixel berubah
+            pixelIdsTextarea.addEventListener('input', function() {
+                const pixelIds = this.value.trim().split('\n').filter(id => id.trim() !== '');
+                totalPixelsElement.textContent = pixelIds.length;
+            });
+        });
+    </script>
+</body>
+</html>
