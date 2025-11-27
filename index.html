@@ -10,7 +10,8 @@
             --primary: #6C63FF;
             --secondary: #4A44C6;
             --accent: #FF6584;
-            --dark: #2A2D3E;
+            --dark: #1A1A2E;
+            --darker: #0F0F1B;
             --light: #F7F9FC;
             --success: #2ECC71;
             --warning: #F39C12;
@@ -26,16 +27,97 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
             color: var(--light);
             min-height: 100vh;
-            padding: 20px;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: rgba(42, 45, 62, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            transform: perspective(1000px) rotateY(-5deg);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: perspective(1000px) rotateY(-15deg) translateX(-50px); }
+            to { opacity: 1; transform: perspective(1000px) rotateY(-5deg) translateX(0); }
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(30, 33, 50, 0.8);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .main-container {
+            display: none;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         header {
@@ -47,12 +129,31 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transform: perspective(1000px) rotateX(5deg);
             border: 1px solid rgba(108, 99, 255, 0.2);
+            position: relative;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(231, 76, 60, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            border-radius: 10px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
         }
 
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #6C63FF, #FF6584);
+            background: linear-gradient(to right, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
@@ -333,6 +434,31 @@
             font-size: 0.9rem;
         }
 
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
         @media (max-width: 768px) {
             .settings-grid {
                 grid-template-columns: 1fr;
@@ -345,12 +471,34 @@
             .btn {
                 width: 100%;
             }
+            
+            .login-box {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1 class="login-title"><i class="fas fa-bolt"></i> Kwai Pixel Activator</h1>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="main-container" id="mainContainer">
         <header class="floating">
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             <h1><i class="fas fa-bolt"></i> Kwai Pixel Activator Pro</h1>
             <p class="subtitle">Aktifkan pixel Kwai secara otomatis dengan kecepatan tinggi</p>
         </header>
@@ -384,7 +532,7 @@
                         <label for="concurrent">Aktivasi Bersamaan:</label>
                         <select id="concurrent">
                             <option value="1">1 (Normal)</option>
-                            <option value="3">3 (Cepat)</option>
+                            <option value="3" selected>3 (Cepat)</option>
                             <option value="5">5 (Sangat Cepat)</option>
                             <option value="10">10 (Ekstrem)</option>
                         </select>
@@ -454,8 +602,17 @@
         </footer>
     </div>
 
+    <div class="notification" id="notification"></div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const loginContainer = document.getElementById('loginContainer');
+            const mainContainer = document.getElementById('mainContainer');
+            const loginForm = document.getElementById('loginForm');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const notification = document.getElementById('notification');
+            
             const pixelIdsTextarea = document.getElementById('pixelIds');
             const numActivationsInput = document.getElementById('numActivations');
             const delayInput = document.getElementById('delay');
@@ -470,13 +627,46 @@
             const errorCountElement = document.getElementById('errorCount');
             const timeRemainingElement = document.getElementById('timeRemaining');
             
+            // State
             let isRunning = false;
             let currentProcess = null;
             let successCount = 0;
             let errorCount = 0;
             let startTime = null;
             
-            // Fungsi untuk menambahkan log
+            // Login System
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (password === 'xiaogui') {
+                    showNotification('Login berhasil!', 'success');
+                    setTimeout(() => {
+                        loginContainer.style.display = 'none';
+                        mainContainer.style.display = 'block';
+                    }, 1000);
+                } else {
+                    showNotification('Password salah!', 'error');
+                }
+            });
+            
+            logoutBtn.addEventListener('click', function() {
+                mainContainer.style.display = 'none';
+                loginContainer.style.display = 'flex';
+                document.getElementById('password').value = '';
+            });
+            
+            // Notification System
+            function showNotification(message, type) {
+                notification.textContent = message;
+                notification.className = `notification ${type} show`;
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Log System
             function addLog(message, type = 'info') {
                 const icons = {
                     'info': 'info-circle',
@@ -495,13 +685,12 @@
                 logContainer.scrollTop = logContainer.scrollHeight;
             }
             
-            // Fungsi untuk mengupdate progress
+            // Progress System
             function updateProgress(current, total) {
                 const percentage = Math.round((current / total) * 100);
                 progressElement.style.width = `${percentage}%`;
                 progressTextElement.textContent = `${percentage}% (${current}/${total})`;
                 
-                // Update waktu tersisa
                 if (startTime && current > 0) {
                     const elapsed = Date.now() - startTime;
                     const remaining = Math.max(0, Math.round((elapsed / current) * (total - current) / 1000));
@@ -509,50 +698,103 @@
                 }
             }
             
-            // Fungsi untuk mengaktifkan pixel (simulasi API Kwai)
+            // Real Pixel Activation
             function activatePixel(pixelId, activationNumber) {
                 return new Promise((resolve, reject) => {
-                    // Simulasi panggilan API ke Kwai
+                    // Generate realistic user data
+                    const userData = generateUserData();
+                    const eventData = generateEventData(pixelId, userData);
+                    
+                    // Create image pixel for tracking
+                    const pixelUrl = `https://analytics.kwai.com/pixel/${pixelId}?${new URLSearchParams(eventData)}`;
+                    
+                    const img = new Image();
+                    img.onload = function() {
+                        resolve({
+                            pixelId,
+                            activationNumber,
+                            userData,
+                            eventData
+                        });
+                    };
+                    
+                    img.onerror = function() {
+                        reject(new Error(`Gagal mengirim pixel ${pixelId}`));
+                    };
+                    
+                    // Set timeout for pixel loading
                     setTimeout(() => {
-                        // Simulasi keberhasilan 95%
-                        const isSuccess = Math.random() > 0.05;
-                        
-                        if (isSuccess) {
-                            // Simulasi event register
-                            const registerData = {
-                                pixel_id: pixelId,
-                                event: 'register',
-                                timestamp: new Date().toISOString(),
-                                user_agent: navigator.userAgent
-                            };
-                            
-                            // Simulasi event purchase dengan nominal R$20
-                            const purchaseData = {
-                                pixel_id: pixelId,
-                                event: 'purchase',
-                                value: 20.00,
-                                currency: 'BRL',
-                                timestamp: new Date().toISOString()
-                            };
-                            
-                            // Dalam implementasi nyata, data ini akan dikirim ke API Kwai
-                            console.log(`Register event untuk Pixel ${pixelId}:`, registerData);
-                            console.log(`Purchase event untuk Pixel ${pixelId}:`, purchaseData);
-                            
+                        if (img.complete) {
                             resolve({
                                 pixelId,
                                 activationNumber,
-                                registerData,
-                                purchaseData
+                                userData,
+                                eventData
                             });
                         } else {
-                            reject(new Error(`Gagal mengaktifkan pixel ${pixelId}`));
+                            reject(new Error(`Timeout pixel ${pixelId}`));
                         }
-                    }, 50); // Waktu simulasi API call yang sangat cepat
+                    }, 2000);
+                    
+                    img.src = pixelUrl;
                 });
             }
             
-            // Fungsi untuk memulai proses aktivasi
+            // Generate realistic user data
+            function generateUserData() {
+                const devices = [
+                    'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)',
+                    'Mozilla/5.0 (Linux; Android 10; SM-G973F)',
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+                    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'
+                ];
+                
+                const events = ['ViewContent', 'Search', 'AddToCart', 'Purchase'];
+                
+                return {
+                    user_agent: devices[Math.floor(Math.random() * devices.length)],
+                    event_name: events[Math.floor(Math.random() * events.length)],
+                    event_time: Math.floor(Date.now() / 1000),
+                    user_id: 'user_' + Math.random().toString(36).substr(2, 9),
+                    value: 20.00,
+                    currency: 'BRL',
+                    ip: generateRandomIP(),
+                    country: 'BR',
+                    language: 'pt-BR'
+                };
+            }
+            
+            // Generate random IP
+            function generateRandomIP() {
+                return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            }
+            
+            // Generate event data for pixel
+            function generateEventData(pixelId, userData) {
+                return {
+                    id: pixelId,
+                    ev: userData.event_name,
+                    dl: `https://kwai.com/product/${Math.random().toString(36).substr(2, 5)}`,
+                    ts: userData.event_time,
+                    ua: userData.user_agent,
+                    if: Math.random() > 0.5,
+                    cd: userData.user_id,
+                    tn: 'purchase',
+                    tr: userData.value.toString(),
+                    ts: userData.event_time.toString(),
+                    cn: 'BRL',
+                    cs: 'direct',
+                    cm: 'organic',
+                    cc: 'USD',
+                    dp: `/product/${Math.random().toString(36).substr(2, 5)}`,
+                    dt: `Product ${Math.floor(Math.random() * 1000)}`,
+                    cd1: userData.user_id,
+                    cd2: userData.country,
+                    cd3: userData.language
+                };
+            }
+            
+            // Start Activation Process
             function startActivation() {
                 if (isRunning) return;
                 
@@ -590,14 +832,13 @@
                 updateProgress(0, totalActivations);
                 addLog(`Memulai aktivasi ${totalActivations} pixel (${totalPixels} pixel × ${numActivations} aktivasi)`, 'info');
                 
-                // Proses aktivasi dengan concurrency
+                // Activation Process with Concurrency
                 currentProcess = (async function() {
                     let completedActivations = 0;
                     
                     for (let activation = 1; activation <= numActivations; activation++) {
                         if (!isRunning) break;
                         
-                        // Proses pixel dalam batch berdasarkan concurrency
                         for (let i = 0; i < pixelIds.length; i += concurrent) {
                             if (!isRunning) break;
                             
@@ -607,7 +848,7 @@
                                     .then(result => {
                                         successCount++;
                                         successCountElement.textContent = successCount;
-                                        addLog(`Pixel ${pixelId}: Register & Purchase berhasil (Aktivasi ${activation})`, 'success');
+                                        addLog(`Pixel ${pixelId}: ${result.eventData.ev} berhasil (Aktivasi ${activation})`, 'success');
                                         return result;
                                     })
                                     .catch(error => {
@@ -622,10 +863,8 @@
                                     })
                             );
                             
-                            // Tunggu batch saat ini selesai
                             await Promise.all(batchPromises);
                             
-                            // Delay antar batch
                             if (isRunning && delay > 0 && (i + concurrent < pixelIds.length || activation < numActivations)) {
                                 await new Promise(resolve => setTimeout(resolve, delay));
                             }
@@ -637,11 +876,12 @@
                         startBtn.disabled = false;
                         stopBtn.disabled = true;
                         isRunning = false;
+                        showNotification('Aktivasi pixel selesai!', 'success');
                     }
                 })();
             }
             
-            // Fungsi untuk menghentikan proses
+            // Stop Activation Process
             function stopActivation() {
                 if (!isRunning) return;
                 
@@ -649,13 +889,14 @@
                 addLog('Proses aktivasi dihentikan oleh pengguna', 'warning');
                 startBtn.disabled = false;
                 stopBtn.disabled = true;
+                showNotification('Aktivasi dihentikan', 'error');
             }
             
-            // Event listeners
+            // Event Listeners
             startBtn.addEventListener('click', startActivation);
             stopBtn.addEventListener('click', stopActivation);
             
-            // Validasi input
+            // Input Validation
             numActivationsInput.addEventListener('change', function() {
                 if (this.value < 1) this.value = 1;
                 if (this.value > 1000) this.value = 1000;
@@ -666,7 +907,7 @@
                 if (this.value > 5000) this.value = 5000;
             });
             
-            // Update statistik saat input pixel berubah
+            // Update statistics when pixel input changes
             pixelIdsTextarea.addEventListener('input', function() {
                 const pixelIds = this.value.trim().split('\n').filter(id => id.trim() !== '');
                 totalPixelsElement.textContent = pixelIds.length;
